@@ -31,6 +31,13 @@ def search():
     limit= request.args.get('limit', default = 10, type = int)
     print(restaurant, cuisine, zipcode)
     inspections = [inspection.to_json() for inspection in Inspector.get_inspections()]
+    if restaurant:
+        inspections = [insp for insp in inspections if insp['restaurant_name'].lower() == restaurant.lower()]
+    if cuisine:
+        inspections = [insp for insp in inspections if insp['cuisine'].lower() == cuisine.lower()]
+    if zipcode:
+        inspections = [insp for insp in inspections if insp['zipcode'] == zipcode]
+    inspections.sort(key=lambda x: x['restaurant_id'])
     return jsonify(inspections[:limit])
 
 

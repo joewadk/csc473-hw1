@@ -29,9 +29,8 @@ def search():
     cuisine=request.args.get('cuisine')
     zipcode=request.args.get('zipcode')
     print(restaurant, cuisine, zipcode)
-    search = Inspector()
-    inspections = list(search.get_inspections())
-    return inspections.to_json()
+    inspections = [inspection.to_json() for inspection in Inspector.get_inspections()]
+    return jsonify(inspections)
 
 
 if __name__ == "__main__":

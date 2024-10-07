@@ -28,9 +28,10 @@ def search():
     restaurant=request.args.get('restaurant_name')
     cuisine=request.args.get('cuisine')
     zipcode=request.args.get('zipcode')
+    limit= request.args.get('limit', default = 10, type = int)
     print(restaurant, cuisine, zipcode)
     inspections = [inspection.to_json() for inspection in Inspector.get_inspections()]
-    return jsonify(inspections)
+    return jsonify(inspections[:limit])
 
 
 if __name__ == "__main__":
